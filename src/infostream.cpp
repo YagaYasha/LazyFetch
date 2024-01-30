@@ -2,6 +2,7 @@
 #include <string>
 #include <cstring>
 #include <fstream>
+#include <algorithm>
 #include "infostream.h"
 
 void dirscan(std::string envdir)
@@ -66,12 +67,12 @@ std::vector<std::string> explode(const std::string& str, const char& ch)
 std::string parse(std::string field, std::string file)
 {
 
-    std::ifstream thefile(file);
-    std::string output, line, line_pre_array;
+    std::ifstream thefile(file); // Opens the file for reading
+    std::string output, line, line_pre_array; 
 
     while (getline(thefile, line))
     {
-        if (isWanted(line, field))
+        if (isWanted(line, field)) 
         {
             line_pre_array = line;
         }
@@ -80,3 +81,12 @@ std::string parse(std::string field, std::string file)
     return line_pre_array;
 }
 
+std::string extractLine(std::string field, std::string file, char delimeter) {
+    std::string distro;
+    std::string line_pre_array = parse(field, file);
+    std::vector<std::string> result = explode(line_pre_array, delimeter);
+    distro = result[1]; // Second element.
+    // Trim `"` from the string.
+    distro.erase(std::remove(distro.begin(), distro.end(), '\"'), distro.end());
+    return distro;
+}
