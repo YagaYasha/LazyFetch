@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
 project(judenfetch
+        VERSION ${PROJECT_VESRION}
         LANGUAGES CXX
-        DESCRIPTUION "Fetch for Linux made by an Israeli jew on C++"
+        DESCRIPTION "jewish fetch"
 )
 
 set(CMAKE_CXX_STANDARD 17)
@@ -13,9 +17,14 @@ add_link_options("-static" "-static-libgcc" "-static-libstdc++")
 
 add_subdirectory(src)
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_NAME "judenfetch")
+
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 SET(CPACK_GENERATOR "TGZ")
 SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 1)
