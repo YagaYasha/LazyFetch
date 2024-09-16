@@ -9,13 +9,13 @@ func Kernel() string {
 	kernel, _ := os.ReadFile("/proc/version")
 	return strings.Split(string(kernel), " ")[2]
 }
-
-func Userhost() string {
+func Host() string {
 	host, _ := os.Hostname()
-	return os.Getenv("USER") + "@" + host
+	return host
 }
-
-//Host: os.Hostname()
+func User() string {
+	return os.Getenv("USER")
+}
 
 func Distro() string {
 	distro, _ := os.ReadFile("/etc/os-release")
